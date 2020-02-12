@@ -18,6 +18,7 @@ PFont font;
 PFont portsFont;
 Serial port;
 
+PrintWriter ibidata;
 
 int IBI;                  // length of time between heartbeats in milliseconds (updated in serialEvent)
 int[] PPG;                // array of raw Pulse Sensor datapoints
@@ -50,6 +51,8 @@ void setup() {
   PPG = new int[150];                // PPG array that that prints heartbeat waveform
   // initialze Data traces
   resetDataTraces();
+  
+  ibidata = createWriter("ibi.txt"); 
 
 
 background(0);
@@ -97,7 +100,8 @@ if(serialPortFound){
   ellipse(windowWidth+75,y,6,6);                  // draw latest data point as a red dot
   fill(255,253,248);                              // eggshell white
   text("IBI: "+IBI+"mS",width-85,50);             // print latest IBI value above pulse wave window
-
+  ibidata.println(IBI);//Erro: escreve multiplas linhas para um unico valor de IBI, o Artiifact não reconhece isso e faz analise incorreta
+  
 
 
 //   GRAPH THE LIVE PULSE SENSOR DATA
